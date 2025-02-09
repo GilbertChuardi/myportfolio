@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import {
   Modal,
   ModalContent,
@@ -10,12 +10,11 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { Slider } from "@nextui-org/slider";
+} from "@heroui/modal";
+import { Button } from "@heroui/button";
+import { Slider } from "@heroui/slider";
 import { countryListData } from "../../public/countryListData";
 import Image from "next/image";
-//import border from "../../public/border.png";
 import Border from "./components/Border";
 
 const GlobeComponent = dynamic(() => import("./components/Globe.js"), {

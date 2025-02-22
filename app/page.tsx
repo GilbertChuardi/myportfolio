@@ -8,7 +8,6 @@ import IconAnimated from './components/IconAnimated'
 import IAmProgrammerSection from './components/IAmProgrammerSection'
 import ExperienceSection from './components/ExperienceSection'
 
-// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const ScrollAnimation = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, createRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
@@ -15,7 +15,7 @@ export default function DraggableCurrency({
   setSecondCurrency,
 }) {
   const currencies = ["EUR", "GBP", "AUD", "NZD", "USD", "CHF", "JPY"];
-  const boxRefs = useRef(currencies.map(() => useRef()));
+  const boxRefs = useRef(currencies.map(() => createRef()));
   const [bCurrenciesPos, setbCurrenciesPos] = useState(true);
   const firstCurrencyPos = useRef();
   const secondCurrencyPos = useRef();

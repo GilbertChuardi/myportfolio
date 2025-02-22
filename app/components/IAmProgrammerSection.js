@@ -10,7 +10,7 @@ const data = ["Javascript", "C++", "PHP", "Python"];
 export default function IAmProgrammerSection() {
   return (
     <div className="w-auto flex h-screen justify-center items-center">
-      Hi I'm a Programmer
+      Hi Im a Programmer
     </div>
   );
 }

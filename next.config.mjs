@@ -16,7 +16,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["png.pngtree.com", "flagcdn.com"],
+    domains: ["png.pngtree.com", "flagcdn.com", "static.vecteezy.com"],
   },
 };
 

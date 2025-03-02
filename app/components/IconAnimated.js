@@ -6,6 +6,10 @@ import ReactAnimationData from "@/public/ReactJsAnimation.json";
 import VueAnimationData from "@/public/VuejsAnimation.json";
 import NextAnimationData from "@/public/NextJsAnimation.json";
 import NodeAnimationData from "@/public/NodeJsAnimation.json";
+import IconComponent from "../border-icon-debug/components/IconComponent";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 const IconAnimated = () => {
   const lottieRefReact = useRef();
@@ -47,8 +51,8 @@ const IconAnimated = () => {
 
   return (
     <div className="w-auto h-screen">
-      <div>Thing I have learned</div>
-      <div className="flex flex-row my-4 justify-around">
+      <h1 className="text-[90px] font-[1000] flex justify-center">Learned</h1>
+      <div className="flex flex-row my-4 justify-evenly">
         <div
           className="w-40 h-40 flex flex-col items-center justify-center border-3 border-[#006fee] rounded-md hover:bg-sky-950"
           onMouseEnter={() => handleToggleEnter("React")}
@@ -106,7 +110,21 @@ const IconAnimated = () => {
           Node.js
         </div>
       </div>
-      <div className="flex flex-row my-4 justify-around">
+      <div className="flex flex-row my-4 justify-around mt-20">
+        <div
+          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-[#006fee] rounded-md hover:bg-sky-950"
+          onMouseEnter={() => handleToggleEnter("React")}
+          onMouseLeave={() => handleToggleLeave("React")}
+        >
+          {/* <Lottie
+            className="w-20 h-20"
+            lottieRef={lottieRefReact}
+            animationData={ReactAnimationData}
+            loop
+            autoplay={false}
+          /> */}
+          Kotlin
+        </div>
         <div
           className="w-40 h-40 flex flex-col items-center justify-center border-3 border-[#006fee] rounded-md hover:bg-sky-950"
           onMouseEnter={() => handleToggleEnter("React")}

@@ -24,11 +24,10 @@ function Chart({ firstCurrency, secondCurrency }) {
     if (newSymbol !== lastValidSymbol) {
       setLastValidSymbol(newSymbol);
     }
-  }, [firstCurrency, secondCurrency]);
+  }, [firstCurrency, secondCurrency, lastValidSymbol]);
 
   useEffect(() => {
     // Remove the existing iframe if it exists
-
     if (container) {
       if (iframeRef.current && container.current.contains(iframeRef.current)) {
         container.current.removeChild(iframeRef.current);

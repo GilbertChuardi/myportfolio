@@ -1,7 +1,6 @@
 .pictureContainer {
   display: grid;
   width: 250px;
-  /* aspect-ratio: 4/3; */
   height: 235px;
   position: relative;
 }
@@ -30,7 +29,6 @@
   display: grid;
   place-items: center;
   text-align: center;
-  /* background-color: var(--bc); */
   background-color: black;
   margin-top: 2px;
   padding-left: 12px;
@@ -43,7 +41,6 @@
 }
 
 .figcaption2 {
-  /* grid-area: 1/1/1/1; */
   justify-self: end;
   min-width: 50%;
   min-height: calc(var(--cs) * 1.5 + var(--bs));

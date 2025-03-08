@@ -6,6 +6,10 @@ import ReactAnimationData from "@/public/ReactJsAnimation.json";
 import VueAnimationData from "@/public/VuejsAnimation.json";
 import NextAnimationData from "@/public/NextJsAnimation.json";
 import NodeAnimationData from "@/public/NodeJsAnimation.json";
+import KotlinAnimationData from "@/public/KotlinAnimation.json";
+import CPlusPlusAnimationData from "@/public/CPlusPlusAnimation.json";
+import GSAPAnimationData from "@/public/GSAPAnimation.json";
+import SvgatorAnimationData from "@/public/SvgatorAnimation.json";
 import IconComponent from "../border-icon-debug/components/IconComponent";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -112,45 +116,45 @@ const IconAnimated = () => {
       </div>
       <div className="flex flex-row my-4 justify-around mt-20">
         <div
-          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-[#006fee] rounded-md hover:bg-sky-950"
+          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-indigo-800 rounded-md hover:bg-indigo-950"
           onMouseEnter={() => handleToggleEnter("React")}
           onMouseLeave={() => handleToggleLeave("React")}
         >
-          {/* <Lottie
+          <Lottie
             className="w-20 h-20"
-            lottieRef={lottieRefReact}
-            animationData={ReactAnimationData}
+            // lottieRef={lottieRefReact}
+            animationData={KotlinAnimationData}
             loop
             autoplay={false}
-          /> */}
+          />
           Kotlin
         </div>
         <div
-          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-[#006fee] rounded-md hover:bg-sky-950"
+          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-green-800 rounded-md hover:bg-green-950"
           onMouseEnter={() => handleToggleEnter("React")}
           onMouseLeave={() => handleToggleLeave("React")}
         >
-          {/* <Lottie
+          <Lottie
             className="w-20 h-20"
-            lottieRef={lottieRefReact}
-            animationData={ReactAnimationData}
+            // lottieRef={lottieRefReact}
+            animationData={GSAPAnimationData}
             loop
             autoplay={false}
-          /> */}
+          />
           GSAP
         </div>
         <div
-          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-gray-400 rounded-md hover:bg-neutral-900"
+          className="w-40 h-40 flex flex-col items-center justify-center border-3 border-blue-800 rounded-md hover:bg-blue-950"
           onMouseEnter={() => handleToggleEnter("Next")}
           onMouseLeave={() => handleToggleLeave("Next")}
         >
-          {/* <Lottie
+          <Lottie
             className="w-20 h-20"
-            lottieRef={lottieRefNext}
-            animationData={NextAnimationData}
+            // lottieRef={lottieRefNext}
+            animationData={CPlusPlusAnimationData}
             loop
             autoplay={false}
-          /> */}
+          />
           C++
         </div>
         <div

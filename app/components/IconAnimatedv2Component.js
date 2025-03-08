@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Lottie from "lottie-react";
-import styles from "./IconComponent.module.css";
+import styles from "./IconAnimatedv2Component.module.css";
 import ReactAnimationData from "@/public/ReactJsAnimation.json";
 import VueAnimationData from "@/public/VuejsAnimation.json";
 import NextAnimationData from "@/public/NextJsAnimation.json";

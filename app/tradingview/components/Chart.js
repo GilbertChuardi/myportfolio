@@ -28,9 +28,12 @@ function Chart({ firstCurrency, secondCurrency }) {
 
   useEffect(() => {
     // Remove the existing iframe if it exists
-    if (iframeRef.current && container.current.contains(iframeRef.current)) {
-      container.current.removeChild(iframeRef.current);
-      iframeRef.current = null;
+
+    if (container) {
+      if (iframeRef.current && container.current.contains(iframeRef.current)) {
+        container.current.removeChild(iframeRef.current);
+        iframeRef.current = null;
+      }
     }
 
     const script = document.createElement("script");
@@ -73,12 +76,18 @@ function Chart({ firstCurrency, secondCurrency }) {
       // Stop observing
       observer.disconnect();
 
-      if (container.current.contains(script)) {
-        container.current.removeChild(script);
-      }
-      if (iframeRef.current && container.current.contains(iframeRef.current)) {
-        container.current.removeChild(iframeRef.current);
-        iframeRef.current = null;
+      if (container.current) {
+        if (container.current.contains(script)) {
+          container.current.removeChild(script);
+        }
+
+        if (
+          iframeRef.current &&
+          container.current.contains(iframeRef.current)
+        ) {
+          container.current.removeChild(iframeRef.current);
+          iframeRef.current = null;
+        }
       }
     };
   }, [lastValidSymbol]);

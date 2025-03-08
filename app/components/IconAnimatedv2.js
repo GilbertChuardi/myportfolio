@@ -1,10 +1,9 @@
 "use client";
 
-import IconComponent from "./components/IconComponent";
+import IconComponent from "./IconAnimatedv2Component";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
-import { useRef } from "react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(Draggable);
@@ -17,7 +16,6 @@ const HomePage = () => {
         trigger: ".boxContainer",
         start: "49% center",
         markers: true,
-        toggleActions: "restart none none none", // debug
       },
       y: -100,
       duration: 1,

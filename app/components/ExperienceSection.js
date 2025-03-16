@@ -3,9 +3,9 @@
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 import { BsThreeDots } from "react-icons/bs";
 import { GrAdd, GrClose, GrFormDown, GrUp } from "react-icons/gr";
-import { Button, ButtonGroup } from "@heroui/button";
+import { Button } from "@heroui/button";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -13,11 +13,23 @@ export default function ExperienceSection() {
   const [number, setNumber] = useState(0);
   const [tab, setTab] = useState();
   const [minSize, setMinSize] = useState(20);
+  const [firstTime, setFirstTime] = useState({
+    adaremit: true,
+    world: true,
+    trading: true,
+  });
 
   const textRefsAdaremit = useRef([]);
 
   useGSAP(() => {
     if (tab === "adaremit") {
+      if (!firstTime.adaremit) return;
+      setFirstTime((prevState) => {
+        return {
+          ...prevState,
+          adaremit: false,
+        };
+      });
       const tl = gsap.timeline();
 
       textRefsAdaremit.current.forEach((ref, index) => {
@@ -27,7 +39,8 @@ export default function ExperienceSection() {
             index == 2 ||
             index == 3 ||
             index == 4 ||
-            index == 5
+            index == 5 ||
+            index == 6
           ) {
             tl.from(ref, {
               clipPath: "inset(0 100% 0 0)",
@@ -40,13 +53,13 @@ export default function ExperienceSection() {
               duration: 1,
               ease: "none",
             });
-          } else if (index == 6) {
+          } else if (index == 7) {
             tl.from(ref, {
               clipPath: "inset(0 100% 0 0)",
               duration: 0.1,
               ease: "none",
             });
-          } else if (index == 7) {
+          } else if (index == 8) {
             tl.fromTo(
               ref,
               {
@@ -57,7 +70,7 @@ export default function ExperienceSection() {
                 duration: 0.2,
                 yoyo: true,
                 repeat: -1,
-                repeatDelay: 1,
+                repeatDelay: 0.5,
                 ease: "power1.inOut",
               }
             );
@@ -200,11 +213,17 @@ export default function ExperienceSection() {
                   {" > "} Fix old Vendor API bug
                 </div>
                 <div ref={(el) => (textRefsAdaremit.current[5] = el)}>
-                  {" > "} Find the best rate from different Vendor
+                  {" > "} Find the best rate from different Vendor for{" "}
+                  <span className="text-amber-700">Admin Website</span>
                 </div>
                 <div ref={(el) => (textRefsAdaremit.current[6] = el)}>
+                  {" > "} Create{" "}
+                  <span className="text-amber-700">Agent Website</span> for
+                  Agent
+                </div>
+                <div ref={(el) => (textRefsAdaremit.current[7] = el)}>
                   {" > "}
-                  <span ref={(el) => (textRefsAdaremit.current[7] = el)}>
+                  <span ref={(el) => (textRefsAdaremit.current[8] = el)}>
                     _
                   </span>
                 </div>
@@ -214,20 +233,37 @@ export default function ExperienceSection() {
 
             {tab == "3dworld" && (
               <div>
-                <h2 className="text-xl font-bold mb-2">3D World</h2>
-                <p className="text-gray-700">
-                  Built an interactive 3D world using React Globe GL.
-                </p>
-                <Link href="/world" className="text-blue-500">
-                  <Button
-                    color="primary"
-                    variant="bordered"
-                    radius="none"
-                    className="hover:bg-[#006fee] hover:text-white"
-                  >
-                    See The World!
-                  </Button>
-                </Link>
+                <div>
+                  {" > "} GET /world <span className="text-green-500">200</span>{" "}
+                  in {number} ms
+                </div>
+                <div className="flex flex-row">
+                  <div className="flex flex-col">
+                    <p>{" > "}</p>
+                    <p>{" > "}</p>
+                  </div>
+                  <div className="text-5xl font-bold ml-1">3D World</div>
+                </div>
+                <div>{" > "} An interactive world using React Globe GL.</div>
+                <div>{" > "} Custom GeoJson for 175 countries</div>
+                <div>{" > "} Custom Border made in SVGator</div>
+                <div className="flex flex-row">
+                  <div className="flex flex-col">
+                    <p>{" > "}</p>
+                    <p>{" > "}</p>
+                  </div>
+                  <Link href="/world" className="text-blue-500">
+                    <Button
+                      color="primary"
+                      variant="bordered"
+                      radius="none"
+                      className="hover:bg-[#006fee] hover:text-white"
+                    >
+                      See The World!
+                    </Button>
+                  </Link>
+                  {/* <div className="text-5xl font-bold ml-1">3D World</div> */}
+                </div>
               </div>
             )}
 

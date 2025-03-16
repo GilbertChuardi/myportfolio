@@ -25,9 +25,10 @@ const ScrollAnimation = () => {
 
     function goToSection(i: number) {
       if (scrollTween) return;
-
+// 0 1 2 3
+//len 4
       scrollTween = gsap.to(window, {
-        scrollTo: { y: i * window.innerHeight, autoKill: false },
+        scrollTo: { y: i < panels.length - 1 ? i * window.innerHeight : i * window.innerHeight + 1, autoKill: false },
         onStart: () => {
           if (!observer) return;
           observer.disable();

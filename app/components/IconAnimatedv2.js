@@ -15,7 +15,6 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: ".boxContainer",
         start: "49% center",
-        markers: true,
       },
       y: -100,
       duration: 1,

@@ -20,6 +20,8 @@ export default function ExperienceSection() {
   });
 
   const textRefsAdaremit = useRef([]);
+  const textRefsWorld = useRef([]);
+  const textRefsTrading = useRef([]);
 
   useGSAP(() => {
     if (tab === "adaremit") {
@@ -44,7 +46,7 @@ export default function ExperienceSection() {
           ) {
             tl.from(ref, {
               clipPath: "inset(0 100% 0 0)",
-              duration: 0.7,
+              duration: 0.6,
               ease: "none",
             });
           } else if (index == 1) {
@@ -60,6 +62,104 @@ export default function ExperienceSection() {
               ease: "none",
             });
           } else if (index == 8) {
+            tl.fromTo(
+              ref,
+              {
+                opacity: 0,
+              },
+              {
+                opacity: 1,
+                duration: 0.2,
+                yoyo: true,
+                repeat: -1,
+                repeatDelay: 0.5,
+                ease: "power1.inOut",
+              }
+            );
+          }
+        }
+      });
+    } else if (tab === "3dworld") {
+      if (!firstTime.world) return;
+      setFirstTime((prevState) => {
+        return {
+          ...prevState,
+          world: false,
+        };
+      });
+      const tl = gsap.timeline();
+
+      textRefsWorld.current.forEach((ref, index) => {
+        if (ref) {
+          if (
+            index == 0 ||
+            index == 1 ||
+            index == 2 ||
+            index == 3 ||
+            index == 4 ||
+            index == 5
+          ) {
+            tl.from(ref, {
+              clipPath: "inset(0 100% 0 0)",
+              duration: 0.6,
+              ease: "none",
+            });
+          } else if (index == 6) {
+            tl.from(ref, {
+              clipPath: "inset(0 100% 0 0)",
+              duration: 0.1,
+              ease: "none",
+            });
+          } else if (index == 7) {
+            tl.fromTo(
+              ref,
+              {
+                opacity: 0,
+              },
+              {
+                opacity: 1,
+                duration: 0.2,
+                yoyo: true,
+                repeat: -1,
+                repeatDelay: 0.5,
+                ease: "power1.inOut",
+              }
+            );
+          }
+        }
+      });
+    } else if (tab === "tradingview") {
+      if (!firstTime.trading) return;
+      setFirstTime((prevState) => {
+        return {
+          ...prevState,
+          trading: false,
+        };
+      });
+      const tl = gsap.timeline();
+
+      textRefsTrading.current.forEach((ref, index) => {
+        if (ref) {
+          if (
+            index == 0 ||
+            index == 1 ||
+            index == 2 ||
+            index == 3 ||
+            index == 4 ||
+            index == 5
+          ) {
+            tl.from(ref, {
+              clipPath: "inset(0 100% 0 0)",
+              duration: 0.6,
+              ease: "none",
+            });
+          } else if (index == 6) {
+            tl.from(ref, {
+              clipPath: "inset(0 100% 0 0)",
+              duration: 0.1,
+              ease: "none",
+            });
+          } else if (index == 7) {
             tl.fromTo(
               ref,
               {
@@ -116,15 +216,16 @@ export default function ExperienceSection() {
                 color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white border-gray-500 hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
               >
                 Adaremit
               </Button>
               <Button
                 onPress={() => handleTab("3dworld")}
+                color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white border-gray-500 hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
               >
                 3D World
               </Button>
@@ -133,7 +234,7 @@ export default function ExperienceSection() {
                 color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white border-gray-500 hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
               >
                 Trading View
               </Button>
@@ -233,21 +334,35 @@ export default function ExperienceSection() {
 
             {tab == "3dworld" && (
               <div>
-                <div>
+                <div ref={(el) => (textRefsWorld.current[0] = el)}>
                   {" > "} GET /world <span className="text-green-500">200</span>{" "}
                   in {number} ms
                 </div>
-                <div className="flex flex-row">
+                <div
+                  className="flex flex-row"
+                  ref={(el) => (textRefsWorld.current[1] = el)}
+                >
                   <div className="flex flex-col">
                     <p>{" > "}</p>
                     <p>{" > "}</p>
                   </div>
                   <div className="text-5xl font-bold ml-1">3D World</div>
                 </div>
-                <div>{" > "} An interactive world using React Globe GL.</div>
-                <div>{" > "} Custom GeoJson for 175 countries</div>
-                <div>{" > "} Custom Border made in SVGator</div>
-                <div className="flex flex-row">
+                <div ref={(el) => (textRefsWorld.current[2] = el)}>
+                  {" > "} An interactive world using{" "}
+                  <span className="text-amber-700">React Globe GL</span>.
+                </div>
+                <div ref={(el) => (textRefsWorld.current[3] = el)}>
+                  {" > "} Custom GeoJson for 175 countries
+                </div>
+                <div ref={(el) => (textRefsWorld.current[4] = el)}>
+                  {" > "} Custom Border made in{" "}
+                  <span className="text-amber-700">SVGator</span>
+                </div>
+                <div
+                  className="flex flex-row"
+                  ref={(el) => (textRefsWorld.current[5] = el)}
+                >
                   <div className="flex flex-col">
                     <p>{" > "}</p>
                     <p>{" > "}</p>
@@ -257,35 +372,71 @@ export default function ExperienceSection() {
                       color="primary"
                       variant="bordered"
                       radius="none"
-                      className="hover:bg-[#006fee] hover:text-white"
+                      className="ml-1 text-white hover:bg-[#006fee] hover:text-white"
                     >
                       See The World!
                     </Button>
                   </Link>
-                  {/* <div className="text-5xl font-bold ml-1">3D World</div> */}
                 </div>
+                <div ref={(el) => (textRefsWorld.current[6] = el)}>
+                  {" > "}
+                  <span ref={(el) => (textRefsWorld.current[7] = el)}>_</span>
+                </div>
+                <br />
               </div>
             )}
 
             {tab == "tradingview" && (
               <div>
-                <h2 className="text-xl font-bold mb-2">
-                  TradingView Integration
-                </h2>
-                <p className="text-gray-700">
-                  Integrated TradingView charts for real-time market data
-                  visualization.
-                </p>
-                <Link href="/tradingview" className="text-blue-500">
-                  <Button
-                    color="primary"
-                    variant="bordered"
-                    radius="none"
-                    className="hover:bg-[#006fee] hover:text-white"
-                  >
-                    See The Chart!
-                  </Button>
-                </Link>
+                <div ref={(el) => (textRefsTrading.current[0] = el)}>
+                  {" > "} GET /trading{" "}
+                  <span className="text-green-500">200</span> in {number} ms
+                </div>
+                <div
+                  className="flex flex-row"
+                  ref={(el) => (textRefsTrading.current[1] = el)}
+                >
+                  <div className="flex flex-col">
+                    <p>{" > "}</p>
+                    <p>{" > "}</p>
+                  </div>
+                  <div className="text-5xl font-bold ml-1">
+                    TradingView Integration
+                  </div>
+                </div>
+                <div ref={(el) => (textRefsTrading.current[2] = el)}>
+                  {" > "} Integrate TradingView widget
+                </div>
+                <div ref={(el) => (textRefsTrading.current[3] = el)}>
+                  {" > "} Draggable Currency
+                </div>
+                <div ref={(el) => (textRefsTrading.current[4] = el)}>
+                  {" > "} AutoCorrect if currency is null in TradingView widget
+                </div>
+                <div
+                  className="flex flex-row"
+                  ref={(el) => (textRefsTrading.current[5] = el)}
+                >
+                  <div className="flex flex-col">
+                    <p>{" > "}</p>
+                    <p>{" > "}</p>
+                  </div>
+                  <Link href="/tradingview" className="text-blue-500">
+                    <Button
+                      color="primary"
+                      variant="bordered"
+                      radius="none"
+                      className="ml-1 text-white hover:bg-[#006fee] hover:text-white"
+                    >
+                      See The Chart!
+                    </Button>
+                  </Link>
+                </div>
+                <div ref={(el) => (textRefsTrading.current[6] = el)}>
+                  {" > "}
+                  <span ref={(el) => (textRefsTrading.current[7] = el)}>_</span>
+                </div>
+                <br />
               </div>
             )}
           </div>

@@ -32,7 +32,7 @@ export default function IAmProgrammerSection() {
     tl.from(".textHi", {
       opacity: 0,
       duration: 0.5,
-      delay: 0.5,
+      delay: 1,
     });
     tl.fromTo(
       ".textHi",
@@ -90,7 +90,7 @@ export default function IAmProgrammerSection() {
     // Set a timeout to show the text after 10 seconds
     scrollTimeout = setTimeout(() => {
       setShowScrollText(true);
-    }, 10000);
+    }, 8000);
 
     // Add the scroll event listener
     window.addEventListener("scroll", handleScroll);

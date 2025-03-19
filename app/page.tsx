@@ -55,6 +55,7 @@ const ScrollAnimation = () => {
   return (
     <div>
       <Background/>
+      <title>Gilbert Chuardi</title>
       <div className='relative z-10'>
         <div className="panel">
           <IAmProgrammerSection />

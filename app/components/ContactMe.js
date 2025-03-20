@@ -140,6 +140,7 @@ export default function Page() {
           </div>
         </div>
       </Form> */}
+
       <div className="flex flex-col gap-8">
         <Image
           src="/curlyArrow.svg"
@@ -162,11 +163,11 @@ export default function Page() {
           onMouseEnter={() => handleIconEnter("1")}
           onMouseLeave={() => handleIconLeave("1")}
           onClick={(e) => {
-            e.preventDefault(); // Prevent default behavior
+            e.preventDefault();
             window.open(
               "https://www.linkedin.com/in/gilbert-chuardi/",
               "_blank"
-            ); // Open in new tab
+            );
           }}
         />
         <div className="ml-[50px]">or</div>
@@ -182,11 +183,11 @@ export default function Page() {
           onMouseEnter={() => handleIconEnter("2")}
           onMouseLeave={() => handleIconLeave("2")}
           onClick={(e) => {
-            e.preventDefault(); // Prevent default behavior
+            e.preventDefault();
             window.open(
               "https://www.upwork.com/freelancers/~01718462e8721949c5?mp_source=share",
               "_blank"
-            ); // Open in new tab
+            );
           }}
         />
       </div>

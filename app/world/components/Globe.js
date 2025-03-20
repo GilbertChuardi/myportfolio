@@ -103,7 +103,7 @@ const GlobeComponent = ({
       <Globe
         ref={globeEl}
         onGlobeReady={() => setIsGlobeReady(true)}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+        globeImageUrl="//unpkg.com/three-globe@2.24.5/example/img/earth-dark.jpg"
         polygonsData={countries.features}
         polygonSideColor={() => "rgba(0, 0, 0, 0.15)"}
         polygonStrokeColor={() => "#000"}

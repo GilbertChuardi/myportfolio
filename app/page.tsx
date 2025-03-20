@@ -45,7 +45,6 @@ const ScrollAnimation = () => {
         trigger: panel, // Explicitly typed as HTMLElement
         start: 'top bottom-=1',
         end: 'bottom top+=1',
-        // markers: true, // Enable markers for debugging
         onEnter: () => !scrollTween && goToSection(i),
         onEnterBack: () => !scrollTween && goToSection(i),
       });

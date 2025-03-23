@@ -15,10 +15,7 @@ export default function IAmProgrammerSection() {
   const textNameRef = useRef(null);
   const textHiRef = useRef(null);
   const textDeveloperRef = useRef(null);
-  const icon1Ref = useRef(null);
-  const icon2Ref = useRef(null);
-  const icon3Ref = useRef(null);
-  const icon4Ref = useRef(null);
+  const logoRef = useRef({});
   const [showScrollText, setShowScrollText] = useState(false);
 
   useGSAP(() => {
@@ -29,33 +26,23 @@ export default function IAmProgrammerSection() {
     textDeveloperRef.current.style.opacity = "1";
 
     const tl = gsap.timeline();
-    tl.from(".textHi", {
-      opacity: 0,
-      duration: 0.5,
-      delay: 1,
-    });
+
+    tl.from(".textHi", { opacity: 0, duration: 0.5, delay: 1 });
+
     tl.fromTo(
       ".textHi",
-      {
-        x: 300,
-      },
-      {
-        x: 0,
-        duration: 0.75,
-        delay: 0.5,
-        ease: "back.inOut",
-      }
+      { x: 300 },
+      { x: 0, duration: 0.75, delay: 0.5, ease: "back.inOut" }
     );
+
     tl.from(".textName", {
       clipPath: "inset(0 100% 0 0)",
       duration: 0.75,
       ease: "none",
     });
-    tl.from(".textDeveloper", {
-      opacity: 0,
-      duration: 0.75,
-      delay: 0.25,
-    });
+
+    tl.from(".textDeveloper", { opacity: 0, duration: 0.75, delay: 0.25 });
+
     tl.from(".icon", {
       scale: 0,
       opacity: 0,
@@ -64,14 +51,12 @@ export default function IAmProgrammerSection() {
       ease: "back",
     });
 
-    icon1Ref.current = wiggleFunction(".icon1");
-    icon2Ref.current = wiggleFunction(".icon2");
-    icon3Ref.current = wiggleFunction(".icon3");
-    icon4Ref.current = wiggleFunction(".icon4");
-    icon1Ref.current.pause();
-    icon2Ref.current.pause();
-    icon3Ref.current.pause();
-    icon4Ref.current.pause();
+    logoRef.current = {
+      1: wiggleFunction(".icon1"),
+      2: wiggleFunction(".icon2"),
+      3: wiggleFunction(".icon3"),
+      4: wiggleFunction(".icon4"),
+    };
   }, []);
 
   useEffect(() => {
@@ -81,21 +66,16 @@ export default function IAmProgrammerSection() {
       if (showScrollText) {
         setShowScrollText(false);
       }
-      // Clear the timeout if the user scrolls before 10 seconds
       clearTimeout(scrollTimeout);
-      // Remove the scroll event listener since we don't need it anymore
       window.removeEventListener("scroll", handleScroll);
     };
 
-    // Set a timeout to show the text after 10 seconds
     scrollTimeout = setTimeout(() => {
       setShowScrollText(true);
     }, 8000);
 
-    // Add the scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener and timeout on component unmount
     return () => {
       clearTimeout(scrollTimeout);
       window.removeEventListener("scroll", handleScroll);
@@ -112,31 +92,12 @@ export default function IAmProgrammerSection() {
         "M0,0 C0.012,0 0.025,0.066 0.05,0.066 0.1,0.066 0.1,-0.211 0.15,-0.211 0.2,-0.211 0.2,0.211 0.25,0.211 0.3,0.211 0.3,-0.404 0.35,-0.404 0.399,-0.404 0.409,0.399 0.459,0.399 0.509,0.399 0.498,-0.403 0.549,-0.403 0.6,-0.403 0.599,0.392 0.649,0.392 0.7,0.392 0.699,-0.207 0.749,-0.207 0.799,-0.207 0.799,0.205 0.849,0.205 0.899,0.205 0.899,-0.024 0.949,-0.024 0.974,-0.024 0.974,0 1,0 "
       ),
       duration: 1,
+      paused: true,
     });
   };
 
-  const handleIconEnter = (tipe) => {
-    if (tipe === "1") {
-      icon1Ref.current.play();
-    } else if (tipe === "2") {
-      icon2Ref.current.play();
-    } else if (tipe === "3") {
-      icon3Ref.current.play();
-    } else if (tipe === "4") {
-      icon4Ref.current.play();
-    }
-  };
-
-  const handleIconLeave = (tipe) => {
-    if (tipe === "1") {
-      icon1Ref.current.pause();
-    } else if (tipe === "2") {
-      icon2Ref.current.pause();
-    } else if (tipe === "3") {
-      icon3Ref.current.pause();
-    } else if (tipe === "4") {
-      icon4Ref.current.pause();
-    }
+  const handleIconInteraction = (action, tipe) => {
+    logoRef.current[tipe]?.[action]();
   };
 
   return (
@@ -145,46 +106,42 @@ export default function IAmProgrammerSection() {
       ref={containerRef}
     >
       <Image
-        src="/BracketLeft.svg"
+        src="/bracket-left.svg"
         alt="Curly Bracket Left SVG"
         width={240}
         height={160}
         className="absolute ml-[-75%] mt-[-25%] icon icon1 opacity-0 rotate-12"
-        ref={icon1Ref}
-        onMouseEnter={() => handleIconEnter("1")}
-        onMouseLeave={() => handleIconLeave("1")}
+        onMouseEnter={() => handleIconInteraction("play", 1)}
+        onMouseLeave={() => handleIconInteraction("pause", 1)}
       />
       <Image
-        src="/Hashtag.svg"
+        src="/hashtag.svg"
         alt="Hashtag SVG"
         width={150}
         height={70}
         className="absolute mr-[-75%] mt-[-25%] icon icon2 opacity-0 rotate-[-12deg]"
-        ref={icon2Ref}
-        onMouseEnter={() => handleIconEnter("2")}
-        onMouseLeave={() => handleIconLeave("2")}
+        onMouseEnter={() => handleIconInteraction("play", 2)}
+        onMouseLeave={() => handleIconInteraction("pause", 2)}
       />
 
       <Image
-        src="/Code.svg"
+        src="/code.svg"
         alt="Code SVG"
         width={180}
         height={100}
         className="absolute ml-[-75%] mb-[-25%] icon icon3 opacity-0 rotate-[-12deg]"
-        ref={icon3Ref}
-        onMouseEnter={() => handleIconEnter("3")}
-        onMouseLeave={() => handleIconLeave("3")}
+        onMouseEnter={() => handleIconInteraction("play", 3)}
+        onMouseLeave={() => handleIconInteraction("pause", 3)}
       />
 
       <Image
-        src="/BracketRight.svg"
+        src="/bracket-right.svg"
         alt="Curly Bracket Right SVG"
         width={240}
         height={160}
         className="absolute mr-[-75%] mb-[-25%] icon icon4 opacity-0 -rotate-45"
-        ref={icon4Ref}
-        onMouseEnter={() => handleIconEnter("4")}
-        onMouseLeave={() => handleIconLeave("4")}
+        onMouseEnter={() => handleIconInteraction("play", 4)}
+        onMouseLeave={() => handleIconInteraction("pause", 4)}
       />
 
       <div className="text-6xl font-[1000] flex flex-row">
@@ -207,7 +164,7 @@ export default function IAmProgrammerSection() {
         }`}
       >
         <Image
-          src="/curlyArrow.svg"
+          src="/curly-arrow.svg"
           alt="Curly Arrow SVG"
           width={40}
           height={40}

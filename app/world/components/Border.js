@@ -2,7 +2,6 @@
 /* eslint-disable */
 
 import { useEffect } from "react";
-import Svg from "../../assets/anim_border_open.svg";
 
 export default function Border() {
   useEffect(() => {

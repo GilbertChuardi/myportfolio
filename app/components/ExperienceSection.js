@@ -9,6 +9,10 @@ import { useState, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP);
+}
+
 export default function ExperienceSection() {
   const [number, setNumber] = useState(0);
   const [tab, setTab] = useState();
@@ -32,8 +36,8 @@ export default function ExperienceSection() {
           adaremit: false,
         };
       });
-      const tl = gsap.timeline();
 
+      const tl = gsap.timeline();
       textRefsAdaremit.current.forEach((ref, index) => {
         if (ref) {
           if (
@@ -64,9 +68,7 @@ export default function ExperienceSection() {
           } else if (index == 8) {
             tl.fromTo(
               ref,
-              {
-                opacity: 0,
-              },
+              { opacity: 0 },
               {
                 opacity: 1,
                 duration: 0.2,
@@ -87,8 +89,8 @@ export default function ExperienceSection() {
           world: false,
         };
       });
-      const tl = gsap.timeline();
 
+      const tl = gsap.timeline();
       textRefsWorld.current.forEach((ref, index) => {
         if (ref) {
           if (
@@ -113,9 +115,7 @@ export default function ExperienceSection() {
           } else if (index == 7) {
             tl.fromTo(
               ref,
-              {
-                opacity: 0,
-              },
+              { opacity: 0 },
               {
                 opacity: 1,
                 duration: 0.2,
@@ -136,8 +136,8 @@ export default function ExperienceSection() {
           trading: false,
         };
       });
-      const tl = gsap.timeline();
 
+      const tl = gsap.timeline();
       textRefsTrading.current.forEach((ref, index) => {
         if (ref) {
           if (
@@ -162,9 +162,7 @@ export default function ExperienceSection() {
           } else if (index == 7) {
             tl.fromTo(
               ref,
-              {
-                opacity: 0,
-              },
+              { opacity: 0 },
               {
                 opacity: 1,
                 duration: 0.2,

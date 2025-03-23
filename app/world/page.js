@@ -1,19 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   useDisclosure,
 } from "@heroui/modal";
-import { Button } from "@heroui/button";
 import { Slider } from "@heroui/slider";
-import { countryListData } from "../../public/countryListData";
+import { countryListData } from "../../data/countryListData";
 import Image from "next/image";
 import Border from "./components/Border";
 
@@ -105,14 +103,6 @@ export default function Page() {
                     Pellentesque sit amet hendrerit risus, sed porttitor quam.
                   </p>
                 </ModalBody>
-                {/* <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Action
-                  </Button>
-                </ModalFooter> */}
               </>
             )}
           </ModalContent>

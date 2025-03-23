@@ -1,6 +1,6 @@
 "use client";
 
-import IconComponent from "./IconAnimatedv2Component";
+import IconComponent from "./IconComponent";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(Draggable);
 }
 
-const HomePage = () => {
+export default function AnimatedIconSection() {
   useGSAP(() => {
     gsap.from(".box", {
       scrollTrigger: {
@@ -106,6 +106,4 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
-
-export default HomePage;
+}

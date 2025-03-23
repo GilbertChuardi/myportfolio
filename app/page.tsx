@@ -4,9 +4,8 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import IconAnimatedv1 from './components/IconAnimatedv1';
-import IconAnimatedv2 from './components/IconAnimatedv2';
-import IAmProgrammerSection from './components/IAmProgrammerSection';
+import AnimatedIconSection from './components/AnimatedIconSection';
+import ProgrammerSection from './components/ProgrammerIntro';
 import ExperienceSection from './components/ExperienceSection';
 import Background from "./components/Background"
 import ContactMe from "./components/ContactMe"
@@ -57,11 +56,10 @@ const ScrollAnimation = () => {
       <title>Gilbert Chuardi</title>
       <div className='relative z-10'>
         <div className="panel">
-          <IAmProgrammerSection />
+          <ProgrammerSection />
         </div>
         <div className="panel">
-          {/* <IconAnimatedv1 /> */}
-          <IconAnimatedv2 />
+          <AnimatedIconSection />
         </div>
         <div className="panel">
           <ExperienceSection />

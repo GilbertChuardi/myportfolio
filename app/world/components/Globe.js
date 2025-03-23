@@ -44,10 +44,6 @@ const GlobeComponent = ({
     setClickedCountry(polygon);
     setHoverD(polygon);
     onOpen();
-
-    console.log(globeEl.current.getScreenCoords(lat, lng));
-
-    //console.log(globeEl.current.controls());
   };
 
   useEffect(() => {

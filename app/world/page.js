@@ -25,6 +25,8 @@ export default function Page() {
   const [selectedCountry, setSelectedCountry] = useState({
     name: "",
     iso_code_2: "",
+    currency_code: "",
+    currency_symbol: "",
   });
 
   const handleZoom = (value) => {
@@ -92,16 +94,8 @@ export default function Page() {
                   />
                 </ModalHeader>
                 <ModalBody className="px-12 pb-20 text-sm">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam pulvinar risus non risus hendrerit venenatis.
-                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam pulvinar risus non risus hendrerit venenatis.
-                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  </p>
+                  <p>Currency Code: {selectedCountry.currency_code}</p>
+                  <p>Currency Symbol: {selectedCountry.currency_symbol}</p>
                 </ModalBody>
               </>
             )}

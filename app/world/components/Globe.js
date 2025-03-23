@@ -36,10 +36,11 @@ const GlobeComponent = ({
       500
     );
 
-    setSelectedCountry((prevState) => ({
-      ...prevState,
+    setSelectedCountry(() => ({
       name: polygon.properties.country_name,
       iso_code_2: polygon.properties.iso_code_2,
+      currency_code: polygon.properties.currency_code,
+      currency_symbol: polygon.properties.currency_symbol,
     }));
     setClickedCountry(polygon);
     setHoverD(polygon);
@@ -99,7 +100,7 @@ const GlobeComponent = ({
       <Globe
         ref={globeEl}
         onGlobeReady={() => setIsGlobeReady(true)}
-        globeImageUrl="//unpkg.com/three-globe@2.24.5/example/img/earth-dark.jpg"
+        globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-dark.jpg"
         polygonsData={countries.features}
         polygonSideColor={() => "rgba(0, 0, 0, 0.15)"}
         polygonStrokeColor={() => "#000"}

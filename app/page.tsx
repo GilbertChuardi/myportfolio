@@ -51,10 +51,10 @@ const ScrollAnimation = () => {
   }, []);
 
   return (
-    <div>
-      <Background/>
+    <div className="relative">
+      <Background />
       <title>Gilbert Chuardi</title>
-      <div className='relative z-10'>
+      <div className="absolute top-0 left-0 w-full h-full">
         <div className="panel">
           <ProgrammerSection />
         </div>

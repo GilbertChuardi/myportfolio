@@ -110,7 +110,7 @@ export default function IAmProgrammerSection() {
         alt="Curly Bracket Left SVG"
         width={240}
         height={160}
-        className="absolute ml-[-75%] mt-[-25%] icon icon1 opacity-0 rotate-12"
+        className="absolute ml-[-75%] mt-[-25%] icon icon1 opacity-0 rotate-12 z-10"
         onMouseEnter={() => handleIconInteraction("play", 1)}
         onMouseLeave={() => handleIconInteraction("pause", 1)}
       />
@@ -119,7 +119,7 @@ export default function IAmProgrammerSection() {
         alt="Hashtag SVG"
         width={150}
         height={70}
-        className="absolute mr-[-75%] mt-[-25%] icon icon2 opacity-0 rotate-[-12deg]"
+        className="absolute mr-[-75%] mt-[-25%] icon icon2 opacity-0 rotate-[-12deg] z-10"
         onMouseEnter={() => handleIconInteraction("play", 2)}
         onMouseLeave={() => handleIconInteraction("pause", 2)}
       />
@@ -129,7 +129,7 @@ export default function IAmProgrammerSection() {
         alt="Code SVG"
         width={180}
         height={100}
-        className="absolute ml-[-75%] mb-[-25%] icon icon3 opacity-0 rotate-[-12deg]"
+        className="absolute ml-[-75%] mb-[-25%] icon icon3 opacity-0 rotate-[-12deg] z-10"
         onMouseEnter={() => handleIconInteraction("play", 3)}
         onMouseLeave={() => handleIconInteraction("pause", 3)}
       />
@@ -139,12 +139,12 @@ export default function IAmProgrammerSection() {
         alt="Curly Bracket Right SVG"
         width={240}
         height={160}
-        className="absolute mr-[-75%] mb-[-25%] icon icon4 opacity-0 -rotate-45"
+        className="absolute mr-[-75%] mb-[-25%] icon icon4 opacity-0 -rotate-45 z-10"
         onMouseEnter={() => handleIconInteraction("play", 4)}
         onMouseLeave={() => handleIconInteraction("pause", 4)}
       />
 
-      <div className="text-6xl font-[1000] flex flex-row">
+      <div className="text-6xl font-[1000] flex flex-row z-10">
         <div ref={textHiRef} className="textHi opacity-0">
           Hi
         </div>
@@ -153,13 +153,13 @@ export default function IAmProgrammerSection() {
         </span>
       </div>
       <div
-        className="text-6xl font-[1000] textDeveloper opacity-0"
+        className="text-6xl font-[1000] textDeveloper opacity-0 z-10"
         ref={textDeveloperRef}
       >
         A Web Developer
       </div>
       <div
-        className={`absolute w-48 mb-[-43%] ml-[-20%] text-xs transition-opacity duration-500 ${
+        className={`absolute w-48 mb-[-43%] ml-[-20%] text-xs transition-opacity duration-500 z-10 ${
           showScrollText ? "opacity-100" : "opacity-0"
         }`}
       >

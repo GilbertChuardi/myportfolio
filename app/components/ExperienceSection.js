@@ -205,16 +205,16 @@ export default function ExperienceSection() {
       <PanelGroup direction="vertical" className="flex-1">
         <Panel defaultSize={40} minSize={minSize}>
           <div className="flex flex-col">
-            <h1 className="text-[90px] font-[1000] flex justify-center">
-              My Experience
-            </h1>
+            <div className="flex justify-center">
+              <h1 className="text-[90px] font-[1000] z-10">My Experience</h1>
+            </div>
             <div className="flex flex-row justify-center gap-3">
               <Button
                 onPress={() => handleTab("adaremit")}
                 color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee] z-10"
               >
                 Adaremit
               </Button>
@@ -223,7 +223,7 @@ export default function ExperienceSection() {
                 color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee] z-10"
               >
                 3D World
               </Button>
@@ -232,7 +232,7 @@ export default function ExperienceSection() {
                 color="primary"
                 radius="none"
                 variant="bordered"
-                className="text-white hover:bg-[#006fee] hover:border-[#006fee]"
+                className="text-white hover:bg-[#006fee] hover:border-[#006fee] z-10"
               >
                 Trading View
               </Button>
@@ -240,11 +240,11 @@ export default function ExperienceSection() {
           </div>
         </Panel>
 
-        <PanelResizeHandle className="h-[2px] bg-gray-500 hover:bg-[#006fee] hover:scale-y-[2]" />
+        <PanelResizeHandle className="h-[2px] bg-gray-500 hover:bg-[#006fee] hover:scale-y-[2] z-10" />
 
         <Panel defaultSize={60} minSize={minSize} className="flex flex-col">
           <div className="flex flex-row justify-between p-2">
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-3 z-10">
               <div className="text-gray-500 font-mono text-xs tracking-tight cursor-default">
                 PROBLEMS
               </div>
@@ -284,12 +284,15 @@ export default function ExperienceSection() {
           <div className="flex-1 overflow-auto p-4 scrollbar-hide">
             {tab === "adaremit" && (
               <div>
-                <div ref={(el) => (textRefsAdaremit.current[0] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[0] = el)}
+                  className="relative z-10"
+                >
                   {" > "} GET /adaremit{" "}
                   <span className="text-green-500">200</span> in {number} ms
                 </div>
                 <div
-                  className="flex flex-row"
+                  className="flex flex-row relative z-10"
                   ref={(el) => (textRefsAdaremit.current[1] = el)}
                 >
                   <div className="flex flex-col">
@@ -300,29 +303,50 @@ export default function ExperienceSection() {
                     Fullstack Developer at Adaremit
                   </div>
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[2] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[2] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Integrate Vendor API for{" "}
                   <span className="text-amber-700">Admin Website</span>
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[3] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[3] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Fix old{" "}
                   <span className="text-amber-700">Remittance Website</span> bug
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[4] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[4] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Fix old Vendor API bug
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[5] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[5] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Find the best rate from different Vendor for{" "}
                   <span className="text-amber-700">Admin Website</span>
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[6] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[6] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Create{" "}
                   <span className="text-amber-700">Agent Website</span> for
                   Agent
                 </div>
-                <div ref={(el) => (textRefsAdaremit.current[7] = el)}>
+                <div
+                  ref={(el) => (textRefsAdaremit.current[7] = el)}
+                  className="relative z-10"
+                >
                   {" > "}
-                  <span ref={(el) => (textRefsAdaremit.current[8] = el)}>
+                  <span
+                    ref={(el) => (textRefsAdaremit.current[8] = el)}
+                    className="relative z-10"
+                  >
                     _
                   </span>
                 </div>
@@ -332,12 +356,15 @@ export default function ExperienceSection() {
 
             {tab == "3dworld" && (
               <div>
-                <div ref={(el) => (textRefsWorld.current[0] = el)}>
+                <div
+                  ref={(el) => (textRefsWorld.current[0] = el)}
+                  className="relative z-10"
+                >
                   {" > "} GET /world <span className="text-green-500">200</span>{" "}
                   in {number} ms
                 </div>
                 <div
-                  className="flex flex-row"
+                  className="flex flex-row relative z-10"
                   ref={(el) => (textRefsWorld.current[1] = el)}
                 >
                   <div className="flex flex-col">
@@ -346,19 +373,28 @@ export default function ExperienceSection() {
                   </div>
                   <div className="text-5xl font-bold ml-1">3D World</div>
                 </div>
-                <div ref={(el) => (textRefsWorld.current[2] = el)}>
+                <div
+                  ref={(el) => (textRefsWorld.current[2] = el)}
+                  className="relative z-10"
+                >
                   {" > "} An interactive world using{" "}
                   <span className="text-amber-700">React Globe GL</span>.
                 </div>
-                <div ref={(el) => (textRefsWorld.current[3] = el)}>
+                <div
+                  ref={(el) => (textRefsWorld.current[3] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Custom GeoJson for 175 countries
                 </div>
-                <div ref={(el) => (textRefsWorld.current[4] = el)}>
+                <div
+                  ref={(el) => (textRefsWorld.current[4] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Custom Border made in{" "}
                   <span className="text-amber-700">SVGator</span>
                 </div>
                 <div
-                  className="flex flex-row"
+                  className="flex flex-row relative z-10"
                   ref={(el) => (textRefsWorld.current[5] = el)}
                 >
                   <div className="flex flex-col">
@@ -376,7 +412,10 @@ export default function ExperienceSection() {
                     </Button>
                   </Link>
                 </div>
-                <div ref={(el) => (textRefsWorld.current[6] = el)}>
+                <div
+                  ref={(el) => (textRefsWorld.current[6] = el)}
+                  className="relative z-10"
+                >
                   {" > "}
                   <span ref={(el) => (textRefsWorld.current[7] = el)}>_</span>
                 </div>
@@ -386,12 +425,15 @@ export default function ExperienceSection() {
 
             {tab == "tradingview" && (
               <div>
-                <div ref={(el) => (textRefsTrading.current[0] = el)}>
+                <div
+                  ref={(el) => (textRefsTrading.current[0] = el)}
+                  className="relative z-10"
+                >
                   {" > "} GET /trading{" "}
                   <span className="text-green-500">200</span> in {number} ms
                 </div>
                 <div
-                  className="flex flex-row"
+                  className="flex flex-row relative z-10"
                   ref={(el) => (textRefsTrading.current[1] = el)}
                 >
                   <div className="flex flex-col">
@@ -402,17 +444,26 @@ export default function ExperienceSection() {
                     TradingView Integration
                   </div>
                 </div>
-                <div ref={(el) => (textRefsTrading.current[2] = el)}>
+                <div
+                  ref={(el) => (textRefsTrading.current[2] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Integrate TradingView widget
                 </div>
-                <div ref={(el) => (textRefsTrading.current[3] = el)}>
+                <div
+                  ref={(el) => (textRefsTrading.current[3] = el)}
+                  className="relative z-10"
+                >
                   {" > "} Draggable Currency
                 </div>
-                <div ref={(el) => (textRefsTrading.current[4] = el)}>
+                <div
+                  ref={(el) => (textRefsTrading.current[4] = el)}
+                  className="relative z-10"
+                >
                   {" > "} AutoCorrect if currency is null in TradingView widget
                 </div>
                 <div
-                  className="flex flex-row"
+                  className="flex flex-row relative z-10"
                   ref={(el) => (textRefsTrading.current[5] = el)}
                 >
                   <div className="flex flex-col">
@@ -430,7 +481,10 @@ export default function ExperienceSection() {
                     </Button>
                   </Link>
                 </div>
-                <div ref={(el) => (textRefsTrading.current[6] = el)}>
+                <div
+                  ref={(el) => (textRefsTrading.current[6] = el)}
+                  className="relative z-10"
+                >
                   {" > "}
                   <span ref={(el) => (textRefsTrading.current[7] = el)}>_</span>
                 </div>

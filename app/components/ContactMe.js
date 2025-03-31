@@ -40,29 +40,29 @@ export default function ContactMe() {
 
   return (
     <div className="flex flex-col items-center h-screen">
-      <h1 className="text-[90px] font-[1000] flex justify-center">
-        Contact Me
-      </h1>
+      <div className="flex justify-center">
+        <h1 className="text-[90px] font-[1000] z-10">Contact Me</h1>
+      </div>
 
       <div className="flex flex-col gap-8">
         <Image
-          className="rotate-[60deg] ml-[-50px] mt-4"
+          className="rotate-[60deg] ml-[-50px] mt-4 z-10"
           src="/curly-arrow.svg"
           width={120}
           height={0}
           alt="Curly Arrow SVG"
         />
-        <div className=" text-3xl ml-[-220px]">gilbertchuar@gmail.com</div>
-        <div className="ml-[100px]">or</div>
+        <div className=" text-3xl ml-[-220px] z-10">gilbertchuar@gmail.com</div>
+        <div className="ml-[100px] z-10">or</div>
         <Image
-          className="absolute transform -scale-x-100 -rotate-90 ml-[130px] mt-[280px]"
+          className="absolute transform -scale-x-100 -rotate-90 ml-[130px] mt-[280px] z-10"
           src="/curly-arrow.svg"
           width={40}
           height={0}
           alt="Curly Arrow SVG"
         />
         <FaLinkedin
-          className="text-[#006fee] text-6xl ml-[200px] logoIcon1 cursor-pointer"
+          className="text-[#006fee] text-6xl ml-[200px] logoIcon1 cursor-pointer z-10"
           onMouseEnter={() => handleIconInteraction("play", 1)}
           onMouseLeave={() => handleIconInteraction("pause", 1)}
           onClick={(e) => {
@@ -73,16 +73,16 @@ export default function ContactMe() {
             );
           }}
         />
-        <div className="ml-[50px]">or</div>
+        <div className="ml-[50px] z-10">or</div>
         <Image
-          className=" absolute rotate-90 ml-[-20px] mt-[420px]"
+          className=" absolute rotate-90 ml-[-20px] mt-[420px] z-10"
           src="/curly-arrow.svg"
           width={40}
           height={0}
           alt="Curly Arrow SVG"
         />
         <BiLogoUpwork
-          className="text-[#15803d] text-6xl ml-[-100px] logoIcon2 cursor-pointer"
+          className="text-[#15803d] text-6xl ml-[-100px] logoIcon2 cursor-pointer z-10"
           onMouseEnter={() => handleIconInteraction("play", 2)}
           onMouseLeave={() => handleIconInteraction("pause", 2)}
           onClick={(e) => {

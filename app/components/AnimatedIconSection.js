@@ -21,15 +21,17 @@ export default function AnimatedIconSection() {
       opacity: 0,
       stagger: 0.2,
       ease: "bounce",
-      onComplete: () => Draggable.create(".box", {}),
+      onComplete: () => Draggable.create(".box", { bounds: ".boxContainer" }),
     });
   }, []);
 
   return (
     <div className="h-screen boxContainer">
-      <h1 className="text-[90px] font-[1000] flex justify-center">Learned</h1>
+      <div className="flex justify-center relative">
+        <h1 className="text-[90px] font-[1000] z-10">Learned</h1>
+      </div>
       <div className="flex justify-evenly place-items-center 2xl:mt-20 mt-8">
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="React.js"
             borderColor="#006fee"
@@ -38,7 +40,7 @@ export default function AnimatedIconSection() {
             hoverColor="#082f49"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="Next.js"
             borderColor="#9ca3af"
@@ -47,7 +49,7 @@ export default function AnimatedIconSection() {
             hoverColor="#171717"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="Vue.js"
             borderColor="#15803d"
@@ -56,7 +58,7 @@ export default function AnimatedIconSection() {
             hoverColor="#052e16"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="Node.js"
             borderColor="#16a34a"
@@ -67,7 +69,7 @@ export default function AnimatedIconSection() {
         </div>
       </div>
       <div className="flex justify-evenly place-items-center 2xl:mt-24 mt-8">
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="Kotlin"
             borderColor="#3730a3"
@@ -76,7 +78,7 @@ export default function AnimatedIconSection() {
             hoverColor="#1e1b4b"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="GSAP"
             borderColor="#166534"
@@ -85,7 +87,7 @@ export default function AnimatedIconSection() {
             hoverColor="#052e16"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="CPlusPlus"
             borderColor="#1e40af"
@@ -94,7 +96,7 @@ export default function AnimatedIconSection() {
             hoverColor="#172554"
           />
         </div>
-        <div className="box">
+        <div className="box z-10">
           <IconComponent
             caption="Svgator"
             borderColor="#9ca3af"

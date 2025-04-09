@@ -1,4 +1,4 @@
-import {heroui} from "@heroui/theme";
+import {heroui} from "@heroui/react";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -6,7 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@heroui/theme/dist/components/(autocomplete|button|modal|slider|ripple|spinner|input|listbox|divider|popover|scroll-shadow).js"
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
@@ -17,6 +17,7 @@ const config: Config = {
       },
     },
   },
+  darkMode: "class",
   plugins: [heroui({
     prefix: "nextui", // prefix for themes variables
     addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").

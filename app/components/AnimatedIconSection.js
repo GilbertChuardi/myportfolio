@@ -4,12 +4,15 @@ import IconComponent from "./IconComponent";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
+import { InertiaPlugin } from "gsap/InertiaPlugin";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(Draggable);
+  gsap.registerPlugin(Draggable, InertiaPlugin);
+  // gsap.registerPlugin(InertiaPlugin);
 }
 
 export default function AnimatedIconSection() {
+  let maxZIndex = 10;
   useGSAP(() => {
     gsap.from(".box", {
       scrollTrigger: {
@@ -21,14 +24,23 @@ export default function AnimatedIconSection() {
       opacity: 0,
       stagger: 0.2,
       ease: "bounce",
-      onComplete: () => Draggable.create(".box", { bounds: ".boxContainer" }),
+      onComplete: () =>
+        Draggable.create(".box", {
+          bounds: ".boxContainer",
+          inertia: true,
+          zIndexBoost: false, // harus false krn lgsg mulai index dr 1000
+          onDragStart: function () {
+            maxZIndex = Math.min(maxZIndex + 1, 200); // limit zindex 200
+            this.target.style.zIndex = maxZIndex;
+          },
+        }),
     });
   }, []);
 
   return (
     <div className="h-screen boxContainer">
       <div className="flex justify-center relative">
-        <h1 className="text-[90px] font-[1000] z-10">Learned</h1>
+        <h1 className="text-[90px] font-[1000] z-10">Skills</h1>
       </div>
       <div className="flex justify-evenly place-items-center 2xl:mt-20 mt-8">
         <div className="box z-10">

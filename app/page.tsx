@@ -67,6 +67,13 @@ const ScrollAnimation = () => {
         <div className="panel">
           <ContactMe />
         </div>
+        {/* {playgroundPanel && ( // Conditionally render the playground panel
+          <div className="panel">
+            <div className="flex flex-col items-center h-screen">
+              <h1 className="z-1">a</h1>
+            </div>
+          </div>
+        )} */}
       </div>
     </div>
   );

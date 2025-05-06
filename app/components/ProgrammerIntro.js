@@ -156,7 +156,7 @@ export default function IAmProgrammerSection() {
         className="text-6xl font-[1000] textDeveloper opacity-0 z-10"
         ref={textDeveloperRef}
       >
-        A Web Developer
+        A Full-Stack Engineer
       </div>
       <div
         className={`absolute w-48 mb-[-43%] ml-[-20%] text-xs transition-opacity duration-500 z-10 ${

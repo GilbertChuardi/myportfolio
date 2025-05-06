@@ -7,6 +7,8 @@ import { useRef } from "react";
 import Image from "next/image";
 import { BiLogoUpwork } from "react-icons/bi";
 import { FaLinkedin } from "react-icons/fa";
+import { Snippet } from "@heroui/snippet";
+import { addToast } from "@heroui/toast";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(CustomEase, useGSAP);
@@ -44,7 +46,7 @@ export default function ContactMe() {
         <h1 className="text-[90px] font-[1000] z-10">Contact Me</h1>
       </div>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-7">
         <Image
           className="rotate-[60deg] ml-[-50px] mt-4 z-10"
           src="/curly-arrow.svg"
@@ -52,7 +54,34 @@ export default function ContactMe() {
           height={0}
           alt="Curly Arrow SVG"
         />
-        <div className=" text-3xl ml-[-220px] z-10">gilbertchuar@gmail.com</div>
+        <div className="text-3xl ml-[-220px] z-10">
+          <Snippet
+            hideSymbol
+            variant="bordered"
+            radius="none"
+            color="primary"
+            className="text-white border-none text-3xl p-0 m-0"
+            onCopy={() => {
+              addToast({
+                title: "Copied!",
+                description: "Email copied to clipboard.",
+                color: "primary",
+                variant: "bordered",
+                radius: "none",
+                classNames: {
+                  title: "text-white",
+                  description: "text-white",
+                },
+              });
+            }}
+            tooltipProps={{
+              radius: "none",
+              variant: "bordered",
+            }}
+          >
+            gilbertchuar@gmail.com
+          </Snippet>
+        </div>
         <div className="ml-[100px] z-10">or</div>
         <Image
           className="absolute transform -scale-x-100 -rotate-90 ml-[130px] mt-[280px] z-10"

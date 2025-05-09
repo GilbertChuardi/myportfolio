@@ -104,6 +104,9 @@ export default function IAmProgrammerSection() {
     <div
       className="w-auto flex flex-col h-screen justify-center items-center"
       ref={containerRef}
+      style={{
+        userSelect: "none",
+      }}
     >
       <Image
         src="/bracket-left.svg"

@@ -1,18 +1,11 @@
 "use client";
 
-import { Checkbox } from "@heroui/checkbox";
-import { useState } from "react";
+import AnimatedIconSection from "../components/AnimatedIconSection";
 
 export default function Page() {
-  const [isSelected, setIsSelected] = useState(false); // Checkbox state
   return (
     <div>
-      <Checkbox
-        isSelected={isSelected}
-        onChange={() => setIsSelected(!isSelected)}
-      >
-        Text
-      </Checkbox>
+      <AnimatedIconSection />
     </div>
   );
 }

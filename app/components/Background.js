@@ -209,7 +209,7 @@ export default function Background() {
         <div
           className="absolute inset-0 z-[1] circularBlackClass"
           style={{
-            backgroundImage: `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 0.95) 80%)`,
+            backgroundImage: `radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 1) 80%)`,
           }}
         ></div>
       )}

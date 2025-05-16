@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+//#region Imports
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   Drawer,
@@ -17,110 +18,25 @@ import {
   ModalFooter,
 } from "@heroui/modal";
 import { useDisclosure } from "@heroui/use-disclosure";
-import { debounce, set, throttle } from "lodash";
+import { debounce, throttle } from "lodash";
 import { Checkbox } from "@heroui/checkbox";
 import { RadioGroup, Radio } from "@heroui/radio";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Button } from "@heroui/react";
+import { Button, CircularProgress } from "@heroui/react";
+import { addToast } from "@heroui/react";
+import Confetti from "./background/Confetti";
+import useSound from "use-sound";
+//#endregion
 
+//#region GSAP Plugin Registration
 if (typeof window !== "undefined") {
   gsap.registerPlugin(useGSAP);
 }
+//#endregion
 
 export default function Background() {
-  //#region Game State and Fumc
-  const [isGameEnable, setIsGameEnable] = useState(false);
-  const [difficulty, setDifficulty] = useState("medium"); // easy, medium, hard
-  const [mouse, setMouse] = useState("click"); // click, hover
-
-  const [hoveredCount, setHoveredCount] = useState(0);
-  const hoveredTilesRef = useRef(new Set());
-  const [clickedCount, setClickedCount] = useState(0);
-  const clickedTiles = useRef(new Set());
-
-  useEffect(() => {
-    calculateGrid();
-  }, [difficulty]);
-
-  const updateHoveredCount = useRef(
-    debounce(() => {
-      setHoveredCount(hoveredTilesRef.current.size);
-    }, 400)
-  ).current;
-
-  const handleMouseEnter = (index) => {
-    if (!hoveredTilesRef.current.has(index)) {
-      hoveredTilesRef.current.add(index);
-      updateHoveredCount(); // Update state periodically
-    }
-  };
-
-  const updateClickedCount = useRef(
-    debounce(() => {
-      setClickedCount(clickedTiles.current.size);
-    }, 400)
-  ).current;
-
-  const handleTileClick = (index) => {
-    clickedTiles.current.add(index);
-    updateClickedCount(); // Update state periodically
-  };
-  //#endregion
-
-  //#region Grid Background State & Func
-  const [gridSize, setGridSize] = useState(0);
-  const [columns, setColumns] = useState(0);
-  const [rows, setRows] = useState(0);
-
-  const calculateGrid = useCallback(
-    throttle(() => {
-      console.log(difficulty);
-      let gridPixel;
-      if (difficulty === "easy") {
-        gridPixel = 75;
-      } else if (difficulty === "medium") {
-        gridPixel = 50;
-      } else if (difficulty === "hard") {
-        gridPixel = 25;
-      }
-
-      const cols = Math.floor(window.innerWidth / gridPixel);
-      const rws = Math.floor(window.innerHeight / gridPixel);
-      setColumns(cols);
-      setRows(rws);
-      setGridSize(cols * rws);
-    }, 400),
-    [difficulty]
-  );
-
-  useEffect(() => {
-    calculateGrid();
-    window.addEventListener("resize", calculateGrid);
-    return () => window.removeEventListener("resize", calculateGrid); // Cleanup listener
-  }, []);
-  //#endregion
-
-  //#region Fullscreen/Maximized Broswer State & Func
-  const [isMaximized, setIsMaximized] = useState(true);
-
-  const checkMaximized = useCallback(() => {
-    const isMaximized =
-      window.screenX === 0 &&
-      window.screenY === 0 &&
-      window.outerWidth === window.screen.availWidth &&
-      window.outerHeight === window.screen.availHeight;
-    setIsMaximized(isMaximized);
-  }, []);
-
-  useEffect(() => {
-    checkMaximized();
-    window.addEventListener("resize", checkMaximized);
-    return () => window.removeEventListener("resize", checkMaximized);
-  }, [checkMaximized]);
-  //#endregion
-
-  //#region Drawer and Modal State
+  //#region State and Refs
   const {
     isOpen: isDrawerOpen,
     onOpen: openDrawer,
@@ -133,27 +49,209 @@ export default function Background() {
     onClose: closeModal,
     onOpenChange: openChangeModal,
   } = useDisclosure();
+
   const [isCircularBlack, setIsCircularBlack] = useState(true);
+  const [isMaximized, setIsMaximized] = useState(true);
+  const [isGameEnable, setIsGameEnable] = useState(false);
+  const [difficulty, setDifficulty] = useState("medium"); // easy, medium, hard
+  const [mouse, setMouse] = useState("click"); // click, hover
+
+  const [hoveredCount, setHoveredCount] = useState(0);
+  const hoveredTilesRef = useRef([new Set(), new Set(), new Set()]);
+  const [clickedCount, setClickedCount] = useState(0);
+  const clickedTiles = useRef([new Set(), new Set(), new Set()]);
+  const totalTiles = useRef([0, 0, 0]);
+  const [achievementsNotified, setAchievementsNotified] = useState({
+    click: { easy: false, medium: false, hard: false },
+    hover: { easy: false, medium: false, hard: false },
+  });
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [playMario] = useSound("/sounds/mario_congrats.mp3");
+  const [playConfetti] = useSound("/sounds/confetti.mp3");
+  const [gridSize, setGridSize] = useState(0);
+  const [columns, setColumns] = useState(0);
+  const [rows, setRows] = useState(0);
+
+  const difficultyIndex = {
+    easy: 0,
+    medium: 1,
+    hard: 2,
+  };
+  //#endregion
+
+  //#region Utility Functions
+  const checkMaximized = useCallback(() => {
+    const isMaximizedVar =
+      window.outerWidth >= window.screen.availWidth - 1 &&
+      window.outerHeight >= window.screen.availHeight - 1;
+    setIsMaximized(isMaximizedVar);
+  }, []);
+
+  const calculateGrid = useCallback(
+    throttle(() => {
+      let gridPixel;
+      if (difficulty === "easy") {
+        gridPixel = 75;
+      } else if (difficulty === "medium") {
+        gridPixel = 50;
+      } else if (difficulty === "hard") {
+        gridPixel = 25;
+      }
+      const cols = Math.floor(window.innerWidth / gridPixel);
+      const rws = Math.floor(window.innerHeight / gridPixel);
+      setColumns(cols);
+      setRows(rws);
+      setGridSize(cols * rws);
+    }, 400),
+    [difficulty]
+  );
+
+  const progressValue = (mouseParam, difficultyParam) => {
+    let progress = 0;
+    if (mouseParam === "click") {
+      progress =
+        (clickedTiles.current[difficultyIndex[difficultyParam]].size * 100) /
+        totalTiles.current[difficultyIndex[difficultyParam]];
+    } else if (mouseParam === "hover") {
+      progress =
+        (hoveredTilesRef.current[difficultyIndex[difficultyParam]].size * 100) /
+        totalTiles.current[difficultyIndex[difficultyParam]];
+    }
+
+    progress = Math.floor(progress);
+
+    return progress;
+  };
+  //#endregion
+
+  //#region Handlers
+  const updateHoveredCount = useMemo(
+    () =>
+      debounce(() => {
+        setHoveredCount(
+          hoveredTilesRef.current[difficultyIndex[difficulty]].size
+        );
+      }, 400),
+    [difficulty]
+  );
+
+  const handleMouseEnter = (index) => {
+    if (!hoveredTilesRef.current[difficultyIndex[difficulty]].has(index)) {
+      hoveredTilesRef.current[difficultyIndex[difficulty]].add(index);
+      updateHoveredCount();
+    }
+  };
+
+  const updateClickedCount = useMemo(
+    () =>
+      debounce(() => {
+        setClickedCount(clickedTiles.current[difficultyIndex[difficulty]].size);
+      }, 400),
+    [difficulty]
+  );
+
+  const handleTileClick = (index) => {
+    if (!clickedTiles.current[difficultyIndex[difficulty]].has(index)) {
+      clickedTiles.current[difficultyIndex[difficulty]].add(index);
+      updateClickedCount();
+    }
+  };
+  //#endregion
+
+  //#region Effects
+  useEffect(() => {
+    checkMaximized();
+    window.addEventListener("resize", checkMaximized);
+    return () => window.removeEventListener("resize", checkMaximized);
+  }, [checkMaximized]);
+
+  useEffect(() => {
+    calculateGrid();
+    if (clickedTiles.current[difficultyIndex[difficulty]].size) {
+      setClickedCount(clickedTiles.current[difficultyIndex[difficulty]].size);
+    } else {
+      setClickedCount(0);
+    }
+
+    if (hoveredTilesRef.current[difficultyIndex[difficulty]].size) {
+      setHoveredCount(
+        hoveredTilesRef.current[difficultyIndex[difficulty]].size
+      );
+    } else {
+      setHoveredCount(0);
+    }
+  }, [difficulty]);
+
+  useEffect(() => {
+    calculateGrid();
+    window.addEventListener("resize", calculateGrid);
+    return () => window.removeEventListener("resize", calculateGrid);
+  }, [calculateGrid]);
+
+  useEffect(() => {
+    if (isMaximized) {
+      totalTiles.current[difficultyIndex[difficulty]] = columns * rows;
+    }
+  }, [columns, rows]);
+
+  useEffect(() => {
+    console.log("hoveredCount", hoveredCount);
+    console.log("clickedCount", clickedCount);
+    console.log("totalTiles", totalTiles.current[difficultyIndex[difficulty]]);
+    console.log("difficulty", difficulty);
+
+    const isClickMode = mouse === "click";
+    const isHoverMode = mouse === "hover";
+
+    if (
+      totalTiles.current[difficultyIndex[difficulty]] !== 0 &&
+      ((isHoverMode &&
+        hoveredCount === totalTiles.current[difficultyIndex[difficulty]]) ||
+        (isClickMode &&
+          clickedCount === totalTiles.current[difficultyIndex[difficulty]])) &&
+      achievementsNotified[mouse][difficulty] === false
+    ) {
+      setAchievementsNotified((prev) => ({
+        ...prev,
+        [mouse]: {
+          ...prev.click,
+          [difficulty]: true,
+        },
+      }));
+      addToast({
+        title: `Achievement Unlocked!`,
+        description: `You have completed all tiles in ${difficulty} size with ${mouse} mode!`,
+        color: "success",
+        variant: "bordered",
+        radius: "none",
+        classNames: {
+          title: "text-white",
+          description: "text-white",
+        },
+      });
+      setShowConfetti(true);
+
+      playConfetti();
+      setTimeout(() => {
+        playConfetti();
+        setTimeout(() => {
+          playConfetti();
+          setTimeout(() => {
+            playMario();
+            setShowConfetti(false);
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    }
+  }, [clickedCount, hoveredCount, difficulty]);
   //#endregion
 
   //#region Animation
-
-  // Animation for the when grid tiles first render
-  // useGSAP(() => {
-  //   gsap.fromTo(
-  //     ".gridClass",
-  //     { opacity: 0 },
-  //     { opacity: 1, duration: 5, stagger: 5 }
-  //   );
-  // }, []);
-
-  // Animation for the when enable the grid tiles click or hover
   useGSAP(() => {
     if (!isGameEnable) {
       setIsCircularBlack(true);
       return;
     }
-
     gsap.to(".gridClass", {
       duration: 0.5,
       yoyo: true,
@@ -170,7 +268,6 @@ export default function Background() {
     setIsCircularBlack(false);
   }, [isGameEnable]);
 
-  // Animation for the circular black background
   useGSAP(() => {
     if (isCircularBlack) {
       gsap.fromTo(
@@ -186,7 +283,6 @@ export default function Background() {
       );
     }
   }, [isCircularBlack]);
-
   //#endregion
 
   return (
@@ -204,6 +300,9 @@ export default function Background() {
         backgroundColor: "rgba(0, 0, 0)",
       }}
     >
+      {/* Confetti */}
+      {showConfetti && <Confetti />}
+
       {/* Background hitam oval */}
       {!isGameEnable && (
         <div
@@ -214,7 +313,7 @@ export default function Background() {
         ></div>
       )}
 
-      {/* Hamburger Menu lgsg ditimpa diatas grid kanan atas */}
+      {/* Hamburger Menu */}
       <div
         style={{
           width:
@@ -245,20 +344,24 @@ export default function Background() {
               style={{
                 width: "100%",
                 height: "100%",
-                backgroundColor: hoveredTilesRef.current.has(index)
+                backgroundColor: hoveredTilesRef.current[
+                  difficultyIndex[difficulty]
+                ].has(index)
                   ? "rgba(0, 111, 238, 0.1)"
                   : "rgba(0, 0, 0)",
-                border: hoveredTilesRef.current.has(index)
+                border: hoveredTilesRef.current[
+                  difficultyIndex[difficulty]
+                ].has(index)
                   ? "2px solid rgba(0, 111, 238, 0.4)"
                   : "1px solid rgba(255, 255, 255, 0.1)",
-                userSelect: "none", // Prevent text selection
+                userSelect: "none",
               }}
               onMouseEnter={(e) => {
                 if (isGameEnable) {
                   handleMouseEnter(index);
                   e.currentTarget.style.backgroundColor =
-                    "rgba(0, 123, 255, 0.3)"; // Bright blue hover color
-                  e.currentTarget.style.borderColor = "rgba(0, 123, 255, 0.8)"; // Bright blue border
+                    "rgba(0, 123, 255, 0.3)";
+                  e.currentTarget.style.borderColor = "rgba(0, 123, 255, 0.8)";
                 }
               }}
               onMouseLeave={(e) => {
@@ -277,27 +380,40 @@ export default function Background() {
               style={{
                 width: "100%",
                 height: "100%",
-                backgroundColor: clickedTiles.current.has(index)
+                backgroundColor: clickedTiles.current[
+                  difficultyIndex[difficulty]
+                ].has(index)
                   ? "rgba(0, 111, 238, 0.1)"
                   : "rgba(0, 0, 0)",
-                border: clickedTiles.current.has(index)
+                border: clickedTiles.current[difficultyIndex[difficulty]].has(
+                  index
+                )
                   ? "2px solid rgba(0, 111, 238, 0.4)"
                   : "1px solid rgba(255, 255, 255, 0.1)",
-                userSelect: "none", // Prevent text selection
+                userSelect: "none",
               }}
               onMouseEnter={(e) => {
-                if (isGameEnable && !clickedTiles.current.has(index)) {
+                if (
+                  isGameEnable &&
+                  !clickedTiles.current[difficultyIndex[difficulty]].has(index)
+                ) {
                   e.currentTarget.style.backgroundColor =
                     "rgba(0, 123, 255, 0.3)";
                   e.currentTarget.style.borderColor = "rgba(0, 123, 255, 0.8)";
                 }
               }}
               onMouseLeave={(e) => {
-                if (isGameEnable && !clickedTiles.current.has(index)) {
+                if (
+                  isGameEnable &&
+                  !clickedTiles.current[difficultyIndex[difficulty]].has(index)
+                ) {
                   e.currentTarget.style.backgroundColor = "rgba(0, 0, 0)";
                   e.currentTarget.style.borderColor =
                     "rgba(255, 255, 255, 0.1)";
-                } else if (isGameEnable && clickedTiles.current.has(index)) {
+                } else if (
+                  isGameEnable &&
+                  clickedTiles.current[difficultyIndex[difficulty]].has(index)
+                ) {
                   e.currentTarget.style.backgroundColor =
                     "rgba(0, 111, 238, 0.1)";
                   e.currentTarget.style.borderColor = "rgba(0, 111, 238, 0.4)";
@@ -328,14 +444,14 @@ export default function Background() {
               x: 0,
               transition: {
                 duration: 0.7,
-                ease: "circOut", // You can use 'easeIn', 'easeOut', 'easeInOut', or a custom cubic-bezier array
+                ease: "circOut",
               },
             },
             exit: {
               x: "100%",
               transition: {
                 duration: 1,
-                ease: "easeIn", // Example of using 'easeIn'
+                ease: "easeIn",
               },
             },
           },
@@ -349,7 +465,7 @@ export default function Background() {
                   <DrawerHeader className="flex flex-col">
                     Background Settings
                   </DrawerHeader>
-                  <DrawerBody className="flex flex-col mt-4">
+                  <DrawerBody className="flex flex-col mt-2">
                     <Checkbox
                       size="sm"
                       color="primary"
@@ -367,7 +483,7 @@ export default function Background() {
                       value={difficulty}
                       onValueChange={setDifficulty}
                       defaultValue="medium"
-                      className="mt-4"
+                      className="mt-2"
                     >
                       <Radio value="easy">Large</Radio>
                       <Radio value="medium">Medium</Radio>
@@ -379,23 +495,96 @@ export default function Background() {
                       value={mouse}
                       onValueChange={setMouse}
                       defaultValue="click"
-                      className="mt-4"
+                      className="mt-2"
                     >
                       <Radio value="click">Click</Radio>
                       <Radio value="hover">Hover</Radio>
                     </RadioGroup>
 
-                    {/* <Checkbox
-                      size="sm"
-                      color="primary"
-                      radius="none"
-                      isSelected={playgroundPanel}
-                      onValueChange={() => {
-                        setPlaygroundPanel((prev) => !prev);
-                      }}
-                    >
-                      Enable Playground Panel?
-                    </Checkbox> */}
+                    {/* Achievements list */}
+                    <div className="mt-2">
+                      <h2 className="text-gray-400">Achievements </h2>
+                      <ul className="list-none">
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Click all tiles in Large Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Click all tiles in Large Sizes"
+                            value={
+                              Number.isNaN(progressValue("click", "easy"))
+                                ? "0"
+                                : progressValue("click", "easy")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Click all tiles in Medium Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Click all tiles in Medium Sizes"
+                            value={
+                              Number.isNaN(progressValue("click", "medium"))
+                                ? "0"
+                                : progressValue("click", "medium")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Click all tiles in Small Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Click all tiles in Small Sizes"
+                            value={
+                              Number.isNaN(progressValue("click", "hard"))
+                                ? "0"
+                                : progressValue("click", "hard")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Hover all tiles in Large Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Hover all tiles in Large Sizes"
+                            value={
+                              Number.isNaN(progressValue("hover", "easy"))
+                                ? "0"
+                                : progressValue("hover", "easy")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Hover all tiles in Medium Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Hover all tiles in Medium Sizes"
+                            value={
+                              Number.isNaN(progressValue("hover", "medium"))
+                                ? "0"
+                                : progressValue("hover", "medium")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                        <li className="text-gray-300 h-fit flex justify-between items-center">
+                          Hover all tiles in Small Sizes
+                          <CircularProgress
+                            aria-label="Achievement progress for Hover all tiles in Small Sizes"
+                            value={
+                              Number.isNaN(progressValue("hover", "hard"))
+                                ? "0"
+                                : progressValue("hover", "hard")
+                            }
+                            showValueLabel={true}
+                            size="lg"
+                          />
+                        </li>
+                      </ul>
+                    </div>
                   </DrawerBody>
 
                   <DrawerFooter className="absolute bottom-0 w-full">
@@ -504,10 +693,14 @@ export default function Background() {
                       variant="ghost"
                       onPress={() => {
                         if (mouse === "click") {
-                          clickedTiles.current.clear();
+                          clickedTiles.current[
+                            difficultyIndex[difficulty]
+                          ].clear();
                           setClickedCount(0);
                         } else if (mouse === "hover") {
-                          hoveredTilesRef.current.clear();
+                          hoveredTilesRef.current[
+                            difficultyIndex[difficulty]
+                          ].clear();
                           setHoveredCount(0);
                         }
                         closeModal();
